@@ -13,11 +13,11 @@ function App() {
 
       
       <h3>Nombre de Usuario</h3>
-      <input type="text" />
+      <input type="text" placeholder="Escriba nombre de usuario"/>
 
       
       <h3>Password</h3>
-      <input type="text" />
+      <input type="text" placeholder="Escriba su contrasena"/>
       <br/>
       <br/>
 
