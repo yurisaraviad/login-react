@@ -4,6 +4,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Login from '../pages/Login';
+import Menu from '../pages/Menu'
 
 
 //se reemplazo Routes por App 11:10
@@ -23,7 +24,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        
+        <Route path="/menu" element={<Menu />} />
       </Routes>
     </Router>
   )
