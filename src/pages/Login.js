@@ -58,6 +58,13 @@ class Login extends Component {
         })
     }
 
+//redireccion si hay usuario
+    componentDidMount(){
+        if(cookies.get('username')){
+            window.location.href="./menu";
+        }
+    }
+
 
 
   render() {

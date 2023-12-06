@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Cookies from 'universal-cookie';
 
 
@@ -17,6 +18,16 @@ export default class Menu extends Component {
 
     }
 
+//redireccion si no hay usuario
+    componentDidMount(){
+        if(!cookies.get('username')){
+            window.location.href="./";
+        }
+    }
+
+
+
+
 
   render() {
     console.log('id: '+cookies.get('id'));
@@ -29,10 +40,10 @@ export default class Menu extends Component {
 
 
     return (
-      <div>
-        <h1>Menu Principal</h1>
+      <div className="containerSecundario">
+        <h2>Menu Principal</h2>
         <br />
-        <button onClick={()=>this.cerrarSesion()}>
+        <button className="btn btn-primary" onClick={()=>this.cerrarSesion()}>
             Cerrar Sesion
         </button>
 
