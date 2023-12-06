@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import md5 from 'md5';
 import Cookies from 'universal-cookie';
+import {Formik,Form,Field} from 'formik';
+
 
 
 const baseUrl ="http://localhost:3001/usuario";
@@ -66,10 +68,61 @@ class Login extends Component {
     }
 
 
+    
+
+
 
   render() {
+
+
+//publicar del formik
+    const publicar =(values) => {
+        console.log(values)
+        
+    }
+
+
+
     return (
+       
+
+
+
+
+        
         <div className="containerPrincipal">
+
+
+
+            {/* formilario formik */}
+            <div className="Form">
+                <Formik 
+                initialValues={{
+                    namek:"",                    
+                    passwordk:""
+                }}
+                onSubmit={publicar}
+                >
+                
+                <Form>
+                    <Field name="namek" type="text" />
+                    <Field name="passwordk" type="password"/>
+
+                    <button type='submit'>Registrarse</button>
+                    
+
+                    
+                </Form>
+
+                
+
+                
+
+                </Formik>
+            </div>
+        
+
+        
         <div className="containerSecundario">
           <div className="form-group">
             <label>Usuario: </label>
