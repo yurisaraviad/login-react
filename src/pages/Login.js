@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import md5 from 'md5';
 import Cookies from 'universal-cookie';
-import {Formik,Form,Field} from 'formik';
+import {Formik,Form,Field,ErrorMessage} from 'formik';
 
 
 
@@ -77,8 +77,16 @@ class Login extends Component {
 
 //publicar del formik
     const publicar =(values) => {
-        console.log(values)
+        alert(JSON.stringify(values))
         
+    }
+
+//validar formik
+    const validar = (values) =>{
+        const errors = {}
+        if(values.passwordk.length<5) errors.passwordk='la contrasena debe ser mayor a 5 digitos'
+        return errors;
+
     }
 
 
@@ -102,12 +110,13 @@ class Login extends Component {
                     passwordk:""
                 }}
                 onSubmit={publicar}
+                validate={validar}
                 >
                 
                 <Form>
                     <Field name="namek" type="text" />
                     <Field name="passwordk" type="password"/>
-
+                    <ErrorMessage name='passwordk'/>
                     <button type='submit'>Registrarse</button>
                     
 
