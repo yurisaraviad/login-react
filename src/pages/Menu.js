@@ -19,11 +19,11 @@ export default class Menu extends Component {
     }
 
 //redireccion si no hay usuario
-    componentDidMount(){
-        if(!cookies.get('username')){
-            window.location.href="./";
-        }
-    }
+     componentDidMount(){
+         if(!cookies.get('username')){
+             window.location.href="./";
+         }
+     }
 
 
 
@@ -42,6 +42,8 @@ export default class Menu extends Component {
     return (
       <div className="containerSecundario">
         <h2>Menu Principal</h2>
+        <h3>Bienvenido: {cookies.get('nombre')} {cookies.get('apellido_paterno')}</h3>
+        <h4>Usuario: {cookies.get('username')} </h4>
         <br />
         <button className="btn btn-primary" onClick={()=>this.cerrarSesion()}>
             Cerrar Sesion
