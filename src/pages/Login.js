@@ -161,7 +161,7 @@ iniciarSesionk=async()=>{
 
 
                     <br/>
-                    <button className="btn btn-primary" type="submit" >Iniciar Sesion</button>
+                    <button className="btn btn-primary" type="submit" >Iniciar Sesion yup</button>
                     
                     <br/>
                   
