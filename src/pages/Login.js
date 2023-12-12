@@ -15,9 +15,7 @@ const cookies = new Cookies();
 class Login extends Component {
     state = {
         form:{
-            username: '',
-            password: '',
-
+            
             usernamek: '',
             passwordk: ''
 
@@ -37,33 +35,7 @@ class Login extends Component {
         console.log(this.state.form);
     }
 
-//para inicar sesion formulario normal
-    iniciarSesion=async()=>{
-        await axios.get(baseUrl, {params: {username: this.state.form.username, 
-                                            password: md5(this.state.form.password)}})
-        .then(response=>{
-            console.log(response);
-            return response.data;
-        })
-        .then(response=>{
-            if(response.length>0){
-                var respuesta=response[0];
-                cookies.set('id', respuesta.id, {path: "/"})
-                cookies.set('apellido_paterno', respuesta.apellido_paterno, {path: "/"})
-                cookies.set('apellido_materno', respuesta.apellido_materno, {path: "/"})
-                cookies.set('nombre', respuesta.nombre, {path: "/"})
-                cookies.set('username', respuesta.username, {path: "/"})
-                alert(`Bienvenido Usuario: ${respuesta.nombre} ${respuesta.apellido_paterno}`)
-                window.location.href="./menu";
 
-            }else{
-                alert('El usuario o la contraseña no son correctos')
-            }
-        })
-        .catch(error=>{
-            console.log(error);
-        })
-    }
 
 //para inicar sesion formik
 iniciarSesionk=async()=>{
@@ -97,79 +69,67 @@ iniciarSesionk=async()=>{
 
 
 
-
-
-
-
  //redireccion si hay usuario
      componentDidMount(){
         if(cookies.get('username')){
              window.location.href="./menu";
          }
-       
-       
-        
+                   
         
      }
 
-
-    
-
-
+  
 
   render() {
 
-
-//publicar del formik
-    const publicar =(values) => {
-        alert(JSON.stringify(values))
-        
-    }
-
-//validar formik
-    const validar = (values) =>{
-        const errors = {}
-
-              
-
-        if(values.passwordk.length<4){
-            errors.passwordk='La contrasena debe ser mayor a 4 digitos'
-        }
-
-
-        return errors;
-
-    }
-
-
-
+    
     return (
        
-
-
-
-
         
         <div className="containerPrincipal">
             
 
-
             {/* formilario formik */}
             <div className="containerSecundario">
-            <h3>Formik</h3>
+            <h3>Iniciar Sesion</h3>
             <div className="form-group">
                 <Formik 
                 initialValues={{
                     usernamek:"",                    
-                    passwordk:""
+                    passwordk:"",
+                    repetirpasswordk:""
                 }}
-                //onSubmit={publicar}
+
+                              
+
                 onSubmit={this.iniciarSesionk}
-                validate={validar}
+
+                onClick={this.limpiarForm}
+
+                
+                validationSchema= {Yup.object
+                    ({
+                    usernamek: Yup.string().required("El nombre es obligatorio")
+                                            .min(5, 'El nombre debe contener por lo menos 5 caracteres'),
+                    passwordk: Yup.string().required("La contraseña es obligatoria")
+                                            .min(4, 'La contraseña  debe contener por lo menos 4 caracteres')
+                                            .max(10, 'La contraseña  debe contener menos de 10 caracteres')
+                                            .oneOf([Yup.ref("repetirpasswordk")],"Las contraseñas no son iguales"),
+                    repetirpasswordk: Yup.string().required("Repetir contraseña es obligatorio")
+                                            .min(4, 'La contraseña  debe contener por lo menos 4 caracteres')
+                                            .max(10, 'La contraseña  debe contener menos de 10 caracteres')
+                                            .oneOf([Yup.ref("passwordk")],"Las contraseñas no son iguales"),
+                    
+                    })  
+                }
+
                 className="form-group"
+              
                 >
                 
+                
                 <Form onChange={this.handleChange}>
+
                     <label>Usuario: </label>
                     <Field 
                     name="usernamek" 
@@ -177,6 +137,10 @@ iniciarSesionk=async()=>{
                     className="form-control" 
                     placeholder="Escriba nombre de usuario"
                     />
+                    <ErrorMessage name='usernamek'/>
+                    
+                    <br/>
+
                     <label>Contraseña: </label>
                     <Field 
                     name="passwordk" 
@@ -185,11 +149,20 @@ iniciarSesionk=async()=>{
                     placeholder="Escriba su contraseña"/>
                     <ErrorMessage name='passwordk'/>
                     <br/>
-                    <button className="btn btn-primary" onClick={()=> this.iniciarSesionk()}>Iniciar Sesión</button>
+                    
+                    <label>Repetir contraseña: </label>
+                    <Field 
+                    name="repetirpasswordk" 
+                    type="password" 
+                    className="form-control" 
+                    placeholder="Repita su contraseña"/>
+                    <ErrorMessage name='repetirpasswordk'/>
+
+
+
                     <br/>
-                    <br/>
-                    <button className="btn btn-primary" type="submit">Submit</button>
-                    <br/>
+                    <button className="btn btn-primary" type="submit" >Iniciar Sesion</button>
+                    
                     <br/>
                   
                     
@@ -201,34 +174,9 @@ iniciarSesionk=async()=>{
             </div>
             </div>
         
-        <hr/>
         
-        <div className="containerSecundario">
-        <h3>Formulario</h3>
-          <div className="form-group">
-            <label>Usuario: </label>
-            <br />
-            <input
-              type="text"
-              className="form-control"
-              name="username"
-              placeholder="Escriba nombre de usuario"
-              onChange={this.handleChange}
-            />
-            <br />
-            <label>Contraseña: </label>
-            <br />
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              placeholder="Escriba su contraseña"
-              onChange={this.handleChange}
-            />
-            <br />
-            <button className="btn btn-primary" onClick={()=> this.iniciarSesion()}>Iniciar Sesión</button>
-          </div>
-        </div>
+        
+       
       </div>
  
     )
