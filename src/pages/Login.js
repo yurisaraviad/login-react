@@ -5,6 +5,7 @@ import axios from 'axios';
 import md5 from 'md5';
 import Cookies from 'universal-cookie';
 import {Formik,Form,Field,ErrorMessage} from 'formik';
+import * as Yup from "yup";
 
 
 
@@ -36,7 +37,7 @@ class Login extends Component {
         console.log(this.state.form);
     }
 
-//para inicar sesion
+//para inicar sesion formulario normal
     iniciarSesion=async()=>{
         await axios.get(baseUrl, {params: {username: this.state.form.username, 
                                             password: md5(this.state.form.password)}})
@@ -128,7 +129,14 @@ iniciarSesionk=async()=>{
 //validar formik
     const validar = (values) =>{
         const errors = {}
-        if(values.passwordk.length<4) errors.passwordk='La contrasena debe ser mayor a 4 digitos'
+
+              
+
+        if(values.passwordk.length<4){
+            errors.passwordk='La contrasena debe ser mayor a 4 digitos'
+        }
+
+
         return errors;
 
     }
@@ -155,8 +163,8 @@ iniciarSesionk=async()=>{
                     usernamek:"",                    
                     passwordk:""
                 }}
-                onSubmit={publicar}
-                // onSubmit={this.iniciarSesionk}
+                //onSubmit={publicar}
+                onSubmit={this.iniciarSesionk}
                 validate={validar}
                 className="form-group"
                 >
@@ -178,6 +186,9 @@ iniciarSesionk=async()=>{
                     <ErrorMessage name='passwordk'/>
                     <br/>
                     <button className="btn btn-primary" onClick={()=> this.iniciarSesionk()}>Iniciar Sesión</button>
+                    <br/>
+                    <br/>
+                    <button className="btn btn-primary" type="submit">Submit</button>
                     <br/>
                     <br/>
                   
