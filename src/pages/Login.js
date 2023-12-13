@@ -104,7 +104,7 @@ iniciarSesionk=async()=>{
 
                 onSubmit={this.iniciarSesionk}
 
-                onClick={this.limpiarForm}
+                
 
                 
                 validationSchema= {Yup.object
@@ -137,7 +137,8 @@ iniciarSesionk=async()=>{
                     className="form-control" 
                     placeholder="Escriba nombre de usuario"
                     />
-                    <ErrorMessage name='usernamek'/>
+                    
+                    <ErrorMessage name='usernamek' component="small" className="alert alert-danger p-0"/>
                     
                     <br/>
 
@@ -147,7 +148,8 @@ iniciarSesionk=async()=>{
                     type="password" 
                     className="form-control" 
                     placeholder="Escriba su contraseña"/>
-                    <ErrorMessage name='passwordk'/>
+                    <ErrorMessage name='passwordk' component="small" className="alert alert-danger p-0"/>
+                    
                     <br/>
                     
                     <label>Repetir contraseña: </label>
@@ -156,12 +158,12 @@ iniciarSesionk=async()=>{
                     type="password" 
                     className="form-control" 
                     placeholder="Repita su contraseña"/>
-                    <ErrorMessage name='repetirpasswordk'/>
+                    <ErrorMessage name='repetirpasswordk' component="small" className="alert alert-danger p-0"/>
 
 
 
                     <br/>
-                    <button className="btn btn-primary" type="submit" >Iniciar Sesion yup</button>
+                    <button className="btn btn-primary" type="submit" >Iniciar Sesion</button>
                     
                     <br/>
                   
