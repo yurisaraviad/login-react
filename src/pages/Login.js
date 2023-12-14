@@ -12,6 +12,9 @@ const cookies = new Cookies();
 
 class Login extends Component {
   state = {
+
+    showModal:false,
+
     form: {
       usernamek: "",
       passwordk: "",
@@ -31,6 +34,9 @@ class Login extends Component {
 
   //para inicar sesion formik
   iniciarSesionk = async () => {
+
+    
+
     await axios
       .get(baseUrl, {
         params: {
@@ -43,7 +49,11 @@ class Login extends Component {
         return response.data;
       })
       .then((response) => {
+        
         if (response.length > 0) {
+
+          
+
           var respuesta = response[0];
           cookies.set("id", respuesta.id, { path: "/" });
           cookies.set("apellido_paterno", respuesta.apellido_paterno, {
@@ -54,12 +64,20 @@ class Login extends Component {
           });
           cookies.set("nombre", respuesta.nombre, { path: "/" });
           cookies.set("username", respuesta.username, { path: "/" });
-          alert(
-            `Bienvenido Usuario: ${respuesta.nombre} ${respuesta.apellido_paterno}`
-          );
+
+          this.setState({showModal:1})
+
+
+        //   alert(
+        //     `Bienvenido Usuario: ${respuesta.nombre} ${respuesta.apellido_paterno}`
+        //   );
+          
           window.location.href = "./menu";
         } else {
-          alert("El usuario o la contraseña no son correctos");
+
+            this.setState({showModal:0})
+
+        //   alert("El usuario o la contraseña no son correctos");
           
         }
       })
@@ -75,12 +93,47 @@ class Login extends Component {
     }
   }
 
+
+
+
   render() {
+
+    let bandera=<></>
+
+
+    switch (this.state.showModal) {
+        case 0:
+            bandera=<div className="alert alert-danger" role="alert">
+                        El usuario o la contraseña no son correctos intente nuevamente
+            </div>
+          break;
+        case 1:
+            bandera=<div class="alert alert-success" role="alert">
+            Bienvenido Usuario
+</div>
+          break;
+        default:
+            bandera=
+            <div class="alert alert-secondary" role="alert"> 
+            Por favor introdusca credenciales
+        </div>
+          break;
+
+      }
+
+
+
+
     return (
       <div className="containerPrincipal">
+
+              
+
+
         {/* formilario formik */}
         <div className="containerSecundario">
           <h3>Iniciar Sesion</h3>
+          {bandera} 
           <div className="form-group">
             <Formik
               initialValues={{
@@ -121,9 +174,7 @@ class Login extends Component {
                     </div>
                   ) : null}
 
-                  <br />
-
-                  <br />
+                 
 
                   <label>Contraseña: </label>
                   <Field
@@ -137,18 +188,26 @@ class Login extends Component {
                     <div className="alert alert-danger p-0">
                       {errors.passwordk}
                     </div>
+                    
                   ) : null}
 
-                  <br />
+                
 
-                  <br />
+                <div className="containerSecundario">
 
-                  <br />
-                  <button className="btn btn-primary" type="submit">
+                
+
+                  <button className="containerSecundario btn btn-primary" type="submit">
                     Iniciar Sesion
                   </button>
 
-                  <br />
+
+
+                </div>
+                
+                
+
+                  
                 </Form>
               )}
             </Formik>
